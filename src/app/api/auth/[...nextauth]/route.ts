@@ -31,7 +31,7 @@ import { NextAuthOptions } from "next-auth";
       throw new Error("Password is incorrect")
     }
     return {
-        _id:Finduser._id,
+        id:Finduser._id,
         email:Finduser.email,
         username:Finduser.username,
         role:Finduser.role,
