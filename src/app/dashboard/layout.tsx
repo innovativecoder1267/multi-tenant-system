@@ -11,7 +11,7 @@ const links = [
   { name: "Settings", href: "/dashboard/settings" },
 ];
 
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout({ children }:{ children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
