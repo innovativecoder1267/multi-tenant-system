@@ -171,7 +171,7 @@ export default function ApiKeysPage() {
 
     {apikeydata.length > 0 && (
       <button
-        onClick={() => copyToClipboard(apikeydata[0].key, "new")}
+        onClick={() => copyToClipboard(apikeydata[0].key)}
         className="px-4 py-2 bg-green-600 hover:bg-green-700 transition text-sm rounded-lg shadow-md shadow-green-500/20"
       >
         Copy
