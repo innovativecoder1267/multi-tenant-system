@@ -158,7 +158,7 @@ export default function MembersPage() {
               key={index}
               className="grid grid-cols-4 items-center py-4 text-sm hover:bg-zinc-950/60 transition rounded-lg"
             >
-              <span className="font-medium">{members.userid.username}</span>
+              <span className="font-medium">{members.userId.username}</span>
               <span className="text-zinc-400">{members.userId.email}</span>
 
               <span>
