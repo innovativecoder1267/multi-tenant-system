@@ -20,7 +20,7 @@ export default function MembersPage() {
     Fetchmembers();
   },[])
   
-  async function handleremove(userId){
+  async function handleremove(userId:any){
     try {
      const res=await axios.post("/api/removeuser",{
       userId
