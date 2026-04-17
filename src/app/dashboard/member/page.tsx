@@ -1,18 +1,30 @@
 "use client"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToast } from "@/app/context/Toastcontext";
+import { useToast } from "@/app/context/toastcontex";
 export default function MembersPage() {
   const {showToast}=useToast()
-  const [member,setmembers]=useState([])
+  const [member,setmembers]=useState<user[]>([])
+
+  interface user{
+    role:string
+    userId:{
+      _id:string
+    userId:string
+    username:string,
+    email:string
+    role:string
+    }
+    
+  }
+
   useEffect(()=>{
     async function Fetchmembers(){
       try {
         const res=await axios.get("/api/getmembers")
         if(res.status===200){
            setmembers(res.data[0])
-           console.log(res.data[0][0].userId.email);
-         }
+          }
       } catch (error) {
         console.log("Error is",error);
       }
@@ -65,8 +77,7 @@ export default function MembersPage() {
   return (
     <div className="space-y-10">
 
-      {/* Header */}
-      <div className="flex justify-between items-center">
+       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">
             Team Members
@@ -83,8 +94,7 @@ export default function MembersPage() {
         </button>
       </div>
 
-      {/* Members Table Card */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 transition hover:border-blue-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]">
+       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 transition hover:border-blue-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]">
      {
   action && (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -120,7 +130,6 @@ export default function MembersPage() {
 
         </div>
 
-        {/* Buttons */}
         <div className="flex justify-end gap-3 mt-6">
 
           <button
@@ -185,6 +194,9 @@ export default function MembersPage() {
           ))}
         </div>
       </div>
+    </div>
+  );
+}
 
     </div>
   );
