@@ -1,10 +1,10 @@
 "use client";
- import { useState } from "react";
+import { useState } from "react";
 import { useToast } from "@/app/context/Toastcontext";
 import axios from "axios";
 export default function SettingsPage() {
-    const [newpass,setnewpass]=useState()
-    const [confirmpass,setconfirmpass]=useState()
+    const [newpass,setnewpass]=useState<string>("")
+    const [confirmpass,setconfirmpass]=useState<string>("")
     const {showToast}=useToast()
     const [workspacename,setworkspacename]=useState("")
  
