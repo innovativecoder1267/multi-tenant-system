@@ -25,7 +25,7 @@ export default function InvitePage() {
         }
     }
     verifyInvite()
-  }, [params.token])
+  }, [params])
 
   return (
 
