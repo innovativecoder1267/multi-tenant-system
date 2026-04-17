@@ -4,13 +4,20 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-export default function DashboardPage() {
+export default function DashboardPage
+
+() {
   const [currentPlan, setCurrentPlan] = useState("Free");
   const [activeMembers, setActiveMembers] = useState(0);
   const [apiUsage, setApiUsage] = useState("0%");
-  const [workspaceData, setWorkspaceData] = useState([])
+  const [workspaceData, setWorkspaceData] = useState<workspace>()
   const [action,setaction]=useState<string>("")
   const router=useRouter();
+  interface workspace{
+    storageused:any
+    requestCount:number
+
+  }
   useEffect(()=>{
     const fetchdata=async()=>{
       const res=await axios.get("/api/dashboard")
@@ -108,7 +115,7 @@ export default function DashboardPage() {
           <div className="group bg-zinc-950 border border-zinc-800 rounded-xl p-6 transition hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
             <p className="text-zinc-400 text-sm">Storage Used</p>
             <h4 className="text-2xl font-semibold mt-2 group-hover:text-blue-400">
-              {workspaceData? workspaceData.storageUsed:"0"} GB
+              {workspaceData? workspaceData.storageused:"0"} GB
             </h4>
             <div className="mt-4 h-24 rounded-xl bg-gradient-to-r from-blue-600/20 via-blue-500/10 to-transparent" />
           </div>
@@ -159,7 +166,6 @@ export default function DashboardPage() {
           ))}
         </div>
       </div>
-
     </div>
   );
 }
