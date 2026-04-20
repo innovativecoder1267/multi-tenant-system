@@ -1,4 +1,4 @@
-import { DbConnection } from "@/lib/db/database.ts"
+import { DbConnection } from "@/lib/db/database"
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { Invite } from "@/schema/inviteschema";
