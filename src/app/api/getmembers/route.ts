@@ -9,7 +9,7 @@ export async function GET(req:NextRequest) {
         req,
         secret:process.env.NEXTAUTH_SECRET
     })
-    
+    console.log("token is",token)
       if(!token||!token?._id){
         return new Response(JSON.stringify({message:"Unauthorized"}),{status:401})
     }
