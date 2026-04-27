@@ -26,7 +26,7 @@ export default async function middleware(req: NextRequest) {
    if (token && pathname === "/login") {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
-  if(token && pathname === "/dashboard"){
+  if(token){
     return NextResponse.redirect(new URL("/dashboard/analytics",req.url))
   }
   return NextResponse.next();
