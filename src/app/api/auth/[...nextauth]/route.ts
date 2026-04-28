@@ -46,7 +46,7 @@ import { NextAuthOptions } from "next-auth";
   callbacks: {
     async jwt({ token,user}) {
         if(user){
-            token._id=user._id
+            token._id=user.id
             token.email=user.email
             token.username=user.username
             token.role=user.role
@@ -56,7 +56,7 @@ import { NextAuthOptions } from "next-auth";
     },
     async session({ session, token,user }) {
        if(token){
-        session.user._id=user._id
+        session.user._id=user.id
         session.user.email=user.email
         session.user.username=user.username
         session.user.role=user.role
