@@ -10,7 +10,13 @@
     const Params=useSearchParams();
     const email=Params.get("email")
     const Router=useRouter();
-    if(!email)return
+    if (!email) {
+  return (
+    <div className="text-white text-center mt-10">
+      Invalid or missing email
+    </div>
+  );
+}
   
     const handleChange = (value: string, index: number) => {
       if (!/^[0-9]?$/.test(value)) return;
