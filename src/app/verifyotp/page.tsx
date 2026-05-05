@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import VerifyContent from "./VerifyContent";
+import VerifyContent from "./verifyotp";
 
 export default function VerifyPage() {
   return (
