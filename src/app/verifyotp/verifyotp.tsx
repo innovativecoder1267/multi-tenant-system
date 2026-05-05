@@ -5,7 +5,7 @@
   import { useSearchParams } from "next/navigation";
   import axios from "axios";
   import { useRouter } from "next/navigation";
-  export default function VerifyPage() {
+  export default function VerifyContent() {
     const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
     const Params=useSearchParams();
     const email=Params.get("email")
