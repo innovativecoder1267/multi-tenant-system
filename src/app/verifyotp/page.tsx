@@ -5,7 +5,7 @@ import VerifyContent from "./verifyotp";
 
 export default function VerifyPage() {
   return (
-    <Suspense fallback={<div className="text-white text-center mt-10">Loading...</div>}>
+    <Suspense fallback={<div className="text-white text-center mt-10">Loading....</div>}>
       <VerifyContent />
     </Suspense>
   );
