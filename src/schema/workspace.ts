@@ -18,8 +18,7 @@ const workspaceSchema=new mongoose.Schema<WorkspaceDocument>({
     },
     name:{
     type:String,
-    required:true
-    },
+     },
     month:{
         type:String,
         required:true
