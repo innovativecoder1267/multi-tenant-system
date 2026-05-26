@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import {GithubLogo, TwitterLogo, LinkedinLogo, Mailbox, ArrowUpRight} from "@phosphor-icons/react"
 const footerLinks = {
   product: [
     { name: "Features", href: "/features" },
@@ -28,10 +27,10 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { name: "GitHub", icon: GithubLogo, href: "https://github.com" },
-  { name: "Twitter", icon: TwitterLogo, href: "https://twitter.com" },
-  { name: "LinkedIn", icon: LinkedinLogo, href: "https://linkedin.com" },
-  { name: "Email", icon: Mailbox, href: "mailto:hello@tenantstack.com" }
+  { name: "GitHub", href: "https://github.com" },
+  { name: "Twitter", href: "https://twitter.com" },
+  { name: "LinkedIn", href: "https://linkedin.com" },
+  { name: "Email", href: "mailto:hello@tenantstack.com" }
 ]
 
 export default function Footer() {
