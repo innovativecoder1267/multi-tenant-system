@@ -97,8 +97,7 @@ export default function Footer() {
                     className="hover:text-white transition-colors duration-300 flex items-center gap-2 group"
                   >
                     {link.name}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
+                   </Link>
                 </motion.li>
               ))}
             </ul>
