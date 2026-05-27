@@ -9,9 +9,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+type cpuchart={
+  data:any
+}
+
 export default function CPUChart({
   data,
-}: any) {
+}:cpuchart) {
    return (
     
     <ResponsiveContainer
