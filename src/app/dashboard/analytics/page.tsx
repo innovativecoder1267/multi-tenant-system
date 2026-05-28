@@ -2,7 +2,14 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react";
-import CPUChart from "../../components/cpucomponents"
+import CPUChart from "../../components/cpucomponent"
+
+
+interface MetricData {
+  Timestamp: string
+  Average: number
+}
+
 export default function AnalyticsPage() {
 
   const [aws,setaws] = useState(false)
@@ -12,14 +19,13 @@ export default function AnalyticsPage() {
   const [accesskey1,setaccesskey1] = useState("")
   const [secretkey1,setsecretkey1] = useState("")
   const [region1,setregion1] = useState("")
-  const [metrics,setmetrics]=useState([])
-  const [networkin,setnetworkin]=useState([])
-  const [networkout,setnetworkout]=useState([])
+  const [metrics,setmetrics]=useState<MetricData[]>([])
+  const [networkin,setnetworkin]=useState<MetricData[]>([])
+  const [networkout,setnetworkout]=useState<MetricData[]>([])
   const [totalrequests,settotalrequests]=useState(0)
   const [checkaws,setcheckaws]=useState(false)
   const [balance,setbalance]=useState()   
-   // we will create a api which hits the services route and gets the data from aws and then we will display it in the charts and metrics
-  useEffect(() => {
+   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/services");
@@ -160,8 +166,7 @@ export default function AnalyticsPage() {
 
 {aws ? (
   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-    {/* your modal code */}
-                <button
+                 <button
             onClick={()=>setaws(true)}
             className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 text-white font-semibold text-base rounded-lg shadow-lg hover:shadow-xl hover:shadow-orange-500/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ease-out overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/0 before:via-white/20 before:to-white/0 before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700">
   <svg className="w-5 h-5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
