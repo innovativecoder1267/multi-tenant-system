@@ -1,7 +1,7 @@
-import InviteClient from "./InviteClient";
+import InvitePage from "./invite";
 
 export const dynamic = "force-dynamic";
 
 export default function Page() {
-  return <InviteClient />;
+  return <InvitePage />;
 }
