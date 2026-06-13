@@ -8,19 +8,26 @@ export default function InvitePage() {
   const token=params.get("token")
   const [status, setStatus] = useState("verifying")
   const router=useRouter()
-  useEffect(() => {
-    async function verifyInvite() {
-        const res=await axios.post("/api/acceptinvite",{
-            token
-        })
-        if(res.status===200){
-            setStatus("success")
-            router.push("dashboard/member")
-            alert("User verified")
-        }
+useEffect(() => {
+  async function verifyInvite() {
+    try {
+      const res = await axios.post("/api/acceptinvite", {
+        token,
+      });
+
+      if (res.status === 200) {
+        setStatus("success");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
     }
-    verifyInvite()
-  }, [params])
+  }
+
+  if (token) {
+    verifyInvite();
+  }
+}, [token]);
 
   return (
 
