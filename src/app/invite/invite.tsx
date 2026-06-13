@@ -18,11 +18,6 @@ export default function InvitePage() {
             router.push("dashboard/member")
             alert("User verified")
         }
-        if(res.status===401){
-            alert("Plz login first")
-            setStatus("Error")
-            router.push("/login")
-        }
     }
     verifyInvite()
   }, [params])
