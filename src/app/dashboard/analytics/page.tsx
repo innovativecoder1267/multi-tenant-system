@@ -2,7 +2,7 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react";
-import CPUChart from "../../components/cpucomponents"
+import CPUChart from "../../components/cpucomponent"
 
 
 interface MetricData {
@@ -60,7 +60,7 @@ export default function AnalyticsPage() {
         secretKey: secretkey,
         region: region,
       });
-      
+
       if(response.data.success==true){
         setaws(true)
         setshowform(false)
@@ -414,41 +414,10 @@ export default function AnalyticsPage() {
             </div>
           </div>
         </div>
+        
       )}
         
-      {/* Main Chart Section */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-blue-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]">
-
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-xl font-semibold">
-        Cpu utilization  
-          </h3>
-                <CPUChart data={cpudata} />
-
-          <select className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1 text-sm focus:outline-none focus:border-blue-500">
-            <option>Last 7 Days</option>
-            <option>Last 30 Days</option>
-            <option>Last 90 Days</option>
-          </select>
-        </div>
-
-      </div>
-
-      {/* Secondary Stats */}
-      <div className="grid grid-cols-2 gap-6">
-
-        {/* API Distribution */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 transition hover:border-blue-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]">
-          <h4 className="font-semibold mb-4">Request Distribution</h4>
-                    <CPUChart data={networkData} />
-
-        </div>
-        {/* Storage Growth */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 transition hover:border-blue-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]">
-          <h4 className="font-semibold mb-4">Storage Growth</h4>
-          <CPUChart data={cpudata}/>
-        </div>
-      </div>
+ 
     </div>
   );
 }
