@@ -2,7 +2,7 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react";
-import CPUChart from "../../components/cpucomponent"
+import CPUChart from "../../components/cpucomponents"
 
 
 interface MetricData {
