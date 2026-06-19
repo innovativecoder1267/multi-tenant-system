@@ -2,7 +2,7 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react";
-import CPUChart from "../../components/cpucomponents"
+import CPUChart from "../../components/cpucomponent"
 
 
 interface MetricData {
@@ -74,8 +74,8 @@ export default function AnalyticsPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/checkaws");
-        if(response.data.success==true){
-        setaws(false)
+         if(response.data.success==true){
+        setaws(true)
          } 
       }
       catch (error) {
@@ -88,10 +88,11 @@ export default function AnalyticsPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/getcpuinfo");
-         setmetrics(response.data.metrics.cpu)
+        console.log("Response from cpu info is",response)
+        setmetrics(response.data.metrics.cpu)
         setnetworkin(response.data.metrics.networkIn)
         setnetworkout(response.data.metrics.networkOut)
-        setbalance(response.data.metrics.awscost.ResultsByTime[0].groups[5].Metrics.UnblendedCost.Amount)
+        setbalance(response.data.metrics.awscost.ResultsByTime[0].groups[1].Metrics.UnblendedCost.Amount)
        }
         catch (error) {
         console.error("Error fetching data:", error);
@@ -382,8 +383,9 @@ export default function AnalyticsPage() {
                   onChange={(e) => setregion(e.target.value)}
                   className="w-full bg-[#0F1722] border border-zinc-700 rounded-md px-3 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 transition appearance-none"
                 >
+                 <option value="us-west-2">US West (Oregon) — us-west-2</option>
                   <option value="us-east-1">US East (N. Virginia) — us-east-1</option>
-                  <option value="us-west-2">US West (Oregon) — us-west-2</option>
+                  <option value="ap-northeast-1"> Asia Pacific (Tokyo) </option>
                   <option value="eu-west-1">Europe (Ireland) — eu-west-1</option>
                   <option value="ap-south-1">Asia Pacific (Mumbai) — ap-south-1</option>
                   <option value="ap-southeast-1">Asia Pacific (Singapore) — ap-southeast-1</option>
