@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     if(!response||!response.Reservations||!response.$metadata||response.$metadata.httpStatusCode!==200){
         return new Response("Invalid AWS credentials or region", { status: 400 });
     }
-    const instanceid=response.Reservations[0].Instances[0].InstanceId;
+    const instanceid=response.Reservations?.[0]?.Instances?.[0]?.InstanceId;;
   if (!instanceid) {
   return new Response("No EC2 instance found", {
     status: 404,
