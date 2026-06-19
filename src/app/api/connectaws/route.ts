@@ -39,6 +39,11 @@ export async function POST(req: NextRequest) {
         return new Response("Invalid AWS credentials or region", { status: 400 });
     }
     const instanceid=response.Reservations[0].Instances[0].InstanceId;
+  if (!instanceid) {
+  return new Response("No EC2 instance found", {
+    status: 404,
+  });
+}
     const workspace=await Workspace.findOne({ownerId:userid})
     if(!workspace){
         return new Response("Workspace not found", { status: 404 });
