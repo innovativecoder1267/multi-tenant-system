@@ -17,7 +17,7 @@ export async function POST(req:NextRequest){
     if(!token||!token._id){
         return NextResponse.json({message:"Unauthorized"},{status:401})
     }
-    const user=await User.findById(token._id).select("workspaceId")
+    const user=await User.findById(_id:token._id).select("workspaceId")
     if(!user?.workspaceId){
         return NextResponse.json({message:"Workspace not found"},{status:404})
     }
