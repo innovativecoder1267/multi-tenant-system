@@ -32,8 +32,6 @@ export async function POST(req:NextRequest){
     const update=await Member.updateOne({
         workspaceId:user.workspaceId,
         userId:userId,
-        role:{$ne:"leader"}
-    },{
         $set:{role:"member"}
     })
     if(!update.matchedCount){
