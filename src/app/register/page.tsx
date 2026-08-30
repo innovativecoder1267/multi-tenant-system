@@ -2,22 +2,22 @@
 
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter,useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { usernamevalidation } from "@/lib/db/validation";
 import { useToast } from "../context/Toastcontext";
-export default function RegisterPage() {
+function RegisterContent() {
   const [username,setusername]=useState<string|null>("")
   const [email,setemail]=useState<string|null>("")
   const [password,setpassword]=useState("")
   const [confirmpassword,setconfirmpassword]=useState("")
-  const [register,setregister]=useState<boolean>(false)
-  const [otp,setotp]=useState("")
   const {showToast}=useToast()
   const router=useRouter();
+  const params=useSearchParams();
+  const callbackUrl=params.get("callbackUrl");
+  const safeCallbackUrl=callbackUrl?.startsWith("/")?callbackUrl:"/dashboard";
   async function Handleclick(e:React.FormEvent) {
     e.preventDefault()
-    setregister(false)
        if(!username||!password||!confirmpassword||!email)return
       const result= usernamevalidation.safeParse(username)
       if(!result.success){
@@ -35,13 +35,10 @@ export default function RegisterPage() {
         if(res.status==201||res.status==200){
         console.log("Otp is",res.data.otp)
         alert("Success came")
-        setotp(res.data.otp)
-        router.push(`/verifyotp?email=${email}`)
-        setregister(true)
+        router.push(`/verifyotp?email=${encodeURIComponent(email)}&callbackUrl=${encodeURIComponent(safeCallbackUrl)}`)
         }
     } catch (error) {
       console.log("Error is",error)
-      setregister(false)
     }
   }
   return (
@@ -133,7 +130,7 @@ export default function RegisterPage() {
         {/* Footer */}
         <p className="text-center text-xs text-zinc-500 mt-6">
           Already have an account?{" "}
-          <Link href="/login">
+          <Link href={`/login?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`}>
             <span className="text-blue-400 hover:underline cursor-pointer">
               Log in
             </span>
@@ -142,5 +139,13 @@ export default function RegisterPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="text-white text-center mt-10">Loading....</div>}>
+      <RegisterContent />
+    </Suspense>
   );
 }

@@ -5,6 +5,7 @@ import { useToast } from "@/app/context/Toastcontext";
 export default function MembersPage() {
   const {showToast}=useToast()
   const [member,setmembers]=useState<user[]>([])
+  const [currentUserRole,setCurrentUserRole]=useState("member")
 
   interface user{
     role:string
@@ -23,7 +24,8 @@ export default function MembersPage() {
       try {
         const res=await axios.get("/api/getmembers")
         if(res.status===200){
-           setmembers(res.data[0])
+           setmembers(res.data.members)
+           setCurrentUserRole(res.data.currentUserRole)
           }
       } catch (error) {
         console.log("Error is",error);
@@ -32,7 +34,7 @@ export default function MembersPage() {
     Fetchmembers();
   },[])
   
-  async function handleremove(userId:any){
+  async function handleremove(userId:string){
     try {
      const res=await axios.post("/api/removeuser",{
       userId
@@ -40,16 +42,14 @@ export default function MembersPage() {
      if(res.status===200){
       showToast("success","User removed success plz refresh the tab")
     } 
-    } catch (error) {
+    } catch {
       showToast("error","User removed Failed")
     }
   }
   const roleColor = (role: string) => {
     switch (role) {
-      case "Owner":
+      case "leader":
         return "bg-purple-600/20 text-purple-400";
-      case "Admin":
-        return "bg-blue-600/20 text-blue-400";
       default:
         return "bg-zinc-700/30 text-zinc-400";
     }
@@ -87,11 +87,13 @@ export default function MembersPage() {
           </p>
         </div>
 
-        <button
-        onClick={()=>setaction(true)}
-        className="bg-blue-600 hover:bg-blue-700 transition px-5 py-2 rounded-xl text-sm shadow-lg shadow-blue-500/20">
-          Invite Member
-        </button>
+        {currentUserRole==="leader"&&(
+          <button
+          onClick={()=>setaction(true)}
+          className="bg-blue-600 hover:bg-blue-700 transition px-5 py-2 rounded-xl text-sm shadow-lg shadow-blue-500/20">
+            Invite Member
+          </button>
+        )}
       </div>
 
        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 transition hover:border-blue-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]">
@@ -184,11 +186,13 @@ export default function MembersPage() {
                 <button
                 className="text-blue-400 hover:underline">
                 </button>
-                <button
-                onClick={()=>handleremove(members.userId._id)}
-                className="text-red-400 hover:underline">
-                  Remove
-                </button>
+                {currentUserRole==="leader"&&members.role!=="leader"&&(
+                  <button
+                  onClick={()=>handleremove(members.userId._id)}
+                  className="text-red-400 hover:underline">
+                    Remove
+                  </button>
+                )}
               </div>
             </div>
           ))}

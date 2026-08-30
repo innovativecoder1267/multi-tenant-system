@@ -1,14 +1,17 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
- import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+ import { useRouter,useSearchParams } from "next/navigation";
 import { useToast } from "../context/Toastcontext";
-export default function LoginPage() {
+function LoginContent() {
     const [email,setemail]=useState<string>("")
     const [password,setpasword]=useState("")
     const {showToast}=useToast();
      const router=useRouter();
+     const params=useSearchParams();
+     const callbackUrl=params.get("callbackUrl");
+     const safeCallbackUrl=callbackUrl?.startsWith("/")?callbackUrl:"/dashboard";
    async function handleclick(e:React.FormEvent){
     e.preventDefault();
         try {
@@ -19,13 +22,13 @@ export default function LoginPage() {
          })
          if(res?.status===200){
             setTimeout(() => {
-           router.push("/dashboard")
+           router.push(safeCallbackUrl)
             }, 3000);
           showToast("success","User logged in success")
 
          }
-        } catch (error:any) {
-            console.log("Error is",error?.message)
+        } catch (error) {
+            console.log("Error is",error instanceof Error ? error.message : error)
             showToast("error","Error occured in login")
         }
     }
@@ -55,7 +58,7 @@ export default function LoginPage() {
 
         </div>
 
-         <form onClick={handleclick} className="space-y-5">
+         <form onSubmit={handleclick} className="space-y-5">
 
           <div>
             <label className="text-sm text-zinc-400">Email</label>
@@ -96,7 +99,7 @@ export default function LoginPage() {
 
          <p className="text-center text-xs text-zinc-500 mt-6">
           Don’t have an account?{" "}
-          <Link href="/register">
+          <Link href={`/register?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`}>
             <span className="text-blue-400 hover:underline cursor-pointer">
               Sign up
             </span>
@@ -105,5 +108,13 @@ export default function LoginPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="text-white text-center mt-10">Loading....</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }

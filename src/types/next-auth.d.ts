@@ -8,6 +8,7 @@ declare module "next-auth" {
         username?: string
         role?: string
         isVerified?: boolean
+        workspaceId?: string
     }
     interface Session { 
         user:{
@@ -16,11 +17,16 @@ declare module "next-auth" {
             username?: string
             role?: string
             isVerified?: boolean
+            workspaceId?: string
         }& DefaultSession["user"]
         }
      declare module 'next-auth/jwt'{
     interface JWT {
+        _id?:string,
         id?:string,
+        email?:string,
+        role?:string,
+        workspaceId?:string,
         isVerified?:boolean,
         IsAcceptingMessages?:boolean,
         username?:string

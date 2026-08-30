@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs"
 import NextAuth from "next-auth";
 import { DbConnection } from "@/lib/db/database";
 import { NextAuthOptions } from "next-auth";
+import { Workspace } from "@/schema/workspace";
  export const authOptions:NextAuthOptions = {
     providers: [
   CredentialsProvider({
@@ -30,12 +31,16 @@ import { NextAuthOptions } from "next-auth";
     if(!isPasswordvalid){
       throw new Error("Password is incorrect")
     }
+    const workspace=Finduser.workspaceId
+      ? Finduser.workspaceId
+      : (await Workspace.findOne({ownerId:Finduser._id}).select("_id"))?._id
     return {
         id:Finduser._id,
         email:Finduser.email,
         username:Finduser.username,
         role:Finduser.role,
-        isVerified:Finduser.isVerified
+        isVerified:Finduser.isVerified,
+        workspaceId:workspace?.toString()
     }
     }
   })
@@ -51,16 +56,18 @@ import { NextAuthOptions } from "next-auth";
             token.username=user.username
             token.role=user.role
             token.isVerified=user.isVerified
+            token.workspaceId=user.workspaceId
         }
       return token
     },
-    async session({ session, token,user }) {
+    async session({ session, token }) {
        if(token){
-        session.user._id=user.id
-        session.user.email=user.email
-        session.user.username=user.username
-        session.user.role=user.role
-        session.user.isVerified=user.isVerified
+        session.user._id=token._id as string
+        session.user.email=token.email as string
+        session.user.username=token.username as string
+        session.user.role=token.role as string
+        session.user.isVerified=token.isVerified as boolean
+        session.user.workspaceId=token.workspaceId as string
        }
       return session
     }

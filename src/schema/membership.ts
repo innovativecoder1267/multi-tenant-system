@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 interface MembershipUser {
     workspaceId:mongoose.Types.ObjectId
     userId:mongoose.Types.ObjectId
-    role:string
+    role:"leader"|"member"
 }
 
 const membershipschema=new mongoose.Schema<MembershipUser>({
@@ -20,6 +20,8 @@ const membershipschema=new mongoose.Schema<MembershipUser>({
     },
     role:{
         type:String,
+        enum:["leader","member"],
+        default:"member",
         required:true
     }
 })

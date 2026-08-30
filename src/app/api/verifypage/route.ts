@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import {DbConnection} from "@/lib/db/database";
 import { Workspace } from "@/schema/workspace";
+import { Member } from "@/schema/membership";
 export async function POST(req:Request){
     await DbConnection();
     const {otp,email}=await req.json();
@@ -29,8 +30,14 @@ export async function POST(req:Request){
         return new Response("Workspace creation failed", { status: 500 });
     }
     user.isVerified=true
+    user.workspaceId=workspace._id;
     user.otp=undefined;
     user.otpExpiry=undefined;
     await user.save();
+    await Member.findOneAndUpdate(
+        {workspaceId:workspace._id,userId:user._id},
+        {$set:{role:"leader"}},
+        {upsert:true,new:true}
+    )
     return NextResponse.json({message:"Email verified successfully"}, { status: 200 });
 }

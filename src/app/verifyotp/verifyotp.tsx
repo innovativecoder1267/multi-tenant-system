@@ -9,6 +9,8 @@
     const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
     const Params=useSearchParams();
     const email=Params.get("email")
+    const callbackUrl=Params.get("callbackUrl")
+    const safeCallbackUrl=callbackUrl?.startsWith("/")?callbackUrl:"/dashboard"
     const Router=useRouter();
   
   if (!email) {
@@ -43,7 +45,7 @@
         })
         if(res.status==200){
           alert("Email verified successfully")
-          Router.push("/login")
+          Router.push(`/login?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`)
         }
       } catch (error) {
         console.log("Error is",error)
@@ -109,7 +111,7 @@
           {/* Back to Login */}
           <p className="text-center text-xs text-zinc-500 mt-4">
             Back to{" "}
-            <Link href="/login">
+            <Link href={`/login?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`}>
               <span className="text-blue-400 hover:underline cursor-pointer">
                 Login
               </span>
